@@ -101,7 +101,7 @@ def ssh_talker(client, addr):
     server.event.wait(10)
     valdict = {"ip": cleanip(addr[0]), "port": addr[1]}
     #chan.send(j2format(j2log, valdict))
-    chan.send('\r\n\r\n%s\r\n\r\n' % j2format(j2send, valdict))
+    chan.send('%s' % j2format(j2send, valdict))
     chan.makefile('rU').readline().strip('\r\n')
     chan.close()
 
