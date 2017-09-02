@@ -17,7 +17,7 @@ The version of CheckMyIP documented here is: **v1.0.0**
 
 -----------------------------------------
 ###   WHAT IS CHECKMYIP   ###
-Everybody has used a service like [WhatIsMyIP.com](#whatismyip) before. If you are an IT engineer or even an amateur technology enthusiast, then you have probably had a reason to check to see your public IP address. This service works great when a browser is available, but at times it is not. We often find ourselves logged into a remote Linux machine or a network switch/router which has a command line and terminal clients (Telnet and SSH), but no browser. The CheckMyIP app and the **TelnetMyIP.com** and **SSHMyIP.com** public services were created with this in mind.
+Everybody has used a service like [WhatIsMyIP.com](whatismyip) before. If you are an IT engineer or even an amateur technology enthusiast, then you have probably had a reason to check to see your public IP address. This service works great when a browser is available, but at times it is not. We often find ourselves logged into a remote Linux machine or a network switch/router which has a command line and terminal clients (Telnet and SSH), but no browser. The CheckMyIP app and the **TelnetMyIP.com** and **SSHMyIP.com** public services were created with this in mind.
 
 
 -----------------------------------------
