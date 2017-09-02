@@ -31,7 +31,10 @@ class log_management:
 		self.logfile = "/etc/checkmyip/checkmyip.log"
 		self._publish_methods()
 		self.can_log = True
-		paramiko.util.log_to_file('/etc/checkmyip/ssh.log')
+		try:
+			paramiko.util.log_to_file('/etc/checkmyip/ssh.log')
+		except IOError:
+			self._create_log_dir()
 	def _logger(self, data):
 		logdata = time.strftime("%Y-%m-%d %H:%M:%S") + ":   " + data + "\n"
 		if self.can_log:
