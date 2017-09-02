@@ -1,3 +1,18 @@
+#!/usr/bin/python
+
+
+#####           CheckMyIP Server             #####
+#####        Written by John W Kerns         #####
+#####       http://blog.packetsar.com        #####
+##### https://github.com/packetsar/checkmyip #####
+
+
+##### Inform version here #####
+version = "v1.0.0"
+
+
+
+
 import os
 import sys
 import time
