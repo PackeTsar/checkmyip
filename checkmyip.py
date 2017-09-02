@@ -197,6 +197,42 @@ def start():
 			quit()
 
 
+class CheckMyIP_Client:
+	def __init__(self):
+		self._json = __import__('json')  # Import the JSON library
+		self._socket = __import__('socket')  # Import the socket library
+		self._data = None  # Initialize the _data variable
+		self._af = "auto"  # Set the IP address family type to "auto"
+		self.server = "telnetmyip.com"  # Set the default CheckMyIP server
+	def get(self):  # Primary method to run IP check
+		if self._af == "auto":  # If we are using an auto address family
+			try:  # Try using IPv6
+				sock = self._socket.socket(self._socket.AF_INET6, 
+				self._socket.SOCK_STREAM)
+				sock.connect((self.server, 23))
+			except:  # Fall back to IPv4 if IPv6 fails
+				sock = self._socket.socket(self._socket.AF_INET, 
+				self._socket.SOCK_STREAM)
+				sock.connect((self.server, 23))
+		elif self._af == "ipv6":  # If we are using the IPv6 address family
+			sock = self._socket.socket(self._socket.AF_INET6, 
+			self._socket.SOCK_STREAM)
+			sock.connect((self.server, 23))
+		elif self._af == "ipv4":  # If we are using the IPv4 address family
+			sock = self._socket.socket(self._socket.AF_INET, 
+			self._socket.SOCK_STREAM)
+			sock.connect((self.server, 23))
+		self._data = sock.recv(1024)  # Recieve data from the buffer
+		sock.close()  # Close the socket
+		return self._json.loads(self._data)  # Return the JSON data
+	def set_family(self, family):  # Method to set the IP address family
+		allowed = ["auto", "ipv4", "ipv6"]  # Allowed input values
+		if family in allowed:
+			self._af = family
+		else:
+			raise Exception("Allowed families are 'auto', 'ipv4', 'ipv6'")
+
+
 if __name__ == "__main__":
 	logging = log_management()
 	start()

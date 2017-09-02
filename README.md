@@ -1,15 +1,34 @@
-# CheckMyIP
+# CheckMyIP ![CheckMyIP][logo]
 A Telnet and SSH based IP Lookup Service
 
 
+-----------------------------------------
+###   VERSION   ###
+The version of CheckMyIP documented here is: **v1.0.0**
+
+-----------------------------------------
+###   TABLE OF CONTENTS   ###
+1. [What is CheckMyIP](#what-is-checkmyip)
+2. [How to Use](#how-to-use)
+3. [Install Process](#install-process)
+4. [Using the API](#using-the-api)
+5. [Contributing](#contributing)
 
 
+-----------------------------------------
+###   WHAT IS CHECKMYIP   ###
+Everybody has used a service like [WhatIsMyIP.com](#whatismyip) before. If you are an IT engineer or even an amateur technology enthusiast, then you have probably had a reason to check to see your public IP address. This service works great when a browser is available, but at times it is not. We often find ourselves logged into a remote Linux machine or a network switch/router which has a command line and terminal clients (Telnet and SSH), but no browser. The CheckMyIP app and the **TelnetMyIP.com** and **SSHMyIP.com** public services were created with this in mind.
 
 
+-----------------------------------------
+###   HOW TO USE   ###
+Using the public **TelnetMyIP.com** and **SSHMyIP.com** services is pretty easy: simply connect to them with a terminal client. You can use a telnet client with TCP port 23 (`telnet telnetmyip.com`), or a SSH client with TCP port 22 (`ssh telnetmyip.com`). The SSH connection requires no authentication, but your SSH client may require you to enter a username, you can use anything you want as it gets ignored anyways(`ssh -limrootbitch telnetmyip.com`).
+
+To enable the use of this service as a simple API, the response to queries is formatted as a JSON document. See the [Using the API](#using-the-api) section.
 
 
-## Install Process
-
+-----------------------------------------
+###   INSTALL PROCESS   ###
 Change Linux SSH Port to TCP222 and reboot
 ```
 sudo sed -i --follow-symlinks 's/#Port 22/Port 222/g' /etc/ssh/sshd_config
@@ -36,18 +55,18 @@ mkdir -p /etc/checkmyip/
 Create Service (`vi /etc/init.d/checkmyip`)
 ```
 #!/bin/bash
-# radiuid daemon
+# checkmyip daemon
 # chkconfig: 345 20 80
-# description: RADIUS to Palo-Alto User-ID Engine
-# processname: radiuid
+# description: CheckMyIP Daemon
+# processname: checkmyip
 
 DAEMON_PATH="/bin/"
 
-DAEMON=radiuid
-DAEMONOPTS="run"
+DAEMON=checkmyip
+#DAEMONOPTS="run"
 
-NAME=RadiUID
-DESC="RADIUS to Palo-Alto User-ID Engine"
+NAME=CheckMyIP
+DESC="CheckMyIP Daemon"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 
@@ -108,3 +127,33 @@ esac
 
 
 
+Finish and Start Up Service
+```
+chmod 777 /etc/init.d/checkmyip
+chkconfig checkmyip on
+service checkmyip start
+service checkmyip status
+```
+
+
+-----------------------------------------
+###   USING THE API   ###
+The CheckMyIP code contains the `CheckMyIP_Client` class which is an API client example which can be used to query a CheckMyIP server (like telnetmyip.com). Below is an example of how you can use it.
+
+```
+from checkmyip import CheckMyIP_Client
+
+client = CheckMyIP_Client()
+ipdict = client.get()
+print("My IP is %s" % ipdict["ip"])
+print("I used port number %s" % ipdict["port"])
+```
+
+-----------------------------------------
+###   CONTRIBUTING   ###
+If you would like to help out by contributing code or reporting issues, please do!
+
+Visit the GitHub page (https://github.com/packetsar/checkmyip) and either report an issue or fork the project, commit some changes, and submit a pull request.
+
+[logo]: http://www.packetsar.com/wp-content/uploads/checkmyip_icon-100.gif
+[whatismyip]: https://www.whatismyip.com/
