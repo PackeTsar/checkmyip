@@ -31,8 +31,6 @@ To enable the use of this service as a simple API, the response to queries is fo
 ###   INSTALL PROCESS   ###
 If you would rather set up your own private instance of CheckMyIP, then you can follow the below instructions to set it up for yourself.
 
-
-
 Change Linux SSH Port to TCP 222 and reboot
 ```
 sudo sed -i --follow-symlinks 's/#Port 22/Port 222/g' /etc/ssh/sshd_config

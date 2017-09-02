@@ -185,7 +185,7 @@ def ssh_talker(client, valdict):
 
 
 def start():
-	talkers = {22: ssh_talker, 23: telnet_talker}
+	talkers = {22: ssh_talker, 23: telnet_talker, 80: telnet_talker}
 	for talker in talkers:
 		thread = threading.Thread(target=listener, args=(talker, talkers[talker]))
 		thread.daemon = True
