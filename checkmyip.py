@@ -19,10 +19,11 @@ import jinja2
 import paramiko
 import threading
 
+
 j2log = "Connection from: {{ ip }} ({{ port }}) ({{ proto }})"
 #j2send = "\n\n\nYour IP Address is {{ ip }} ({{ port }})\n\n\n\n"
 
-
+ 
 j2send = """{
 
 
@@ -33,9 +34,6 @@ j2send = """{
 "ip": "{{ ip }}", 
 "port": "{{ port }}"
 }"""
-
-
-
 
 
 class log_management:
@@ -184,23 +182,12 @@ def http_talker(client, valdict):
 	valdict.update({"proto": "http"})
 	log(j2format(j2log, valdict))
 	response_body_raw = j2format(j2send, valdict)
-	response_headers = {
-			'Content-Type': 'text/html; encoding=utf8',
-			'Content-Length': len(response_body_raw),
-			'Connection': 'close',
-	}
-	response_headers_raw = ''.join('%s: %s\n' % (k, v) for k, v in \
-		response_headers.iteritems())
-	response_proto = 'HTTP/1.1'
-	response_status = '200'
-	response_status_text = 'OK'
-	client.send('%s %s %s' % (response_proto, response_status, response_status_text))
-	client.send(response_headers_raw)
-	client.send('\n')
-	client.send(response_body_raw)
+	response_headers_raw = """HTTP/1.1 200 OK
+Content-Length: %s
+Content-Type: application/json; encoding=utf8
+Connection: close""" % str(len(response_body_raw))
+	client.send(response_headers_raw + "\n\n" + response_body_raw)
 	client.close()
-
-
 
 
 def start():
