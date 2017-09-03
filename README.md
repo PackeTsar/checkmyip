@@ -1,4 +1,4 @@
-# [![Twitter][twitter-logo]][twitter]  CheckMyIP ![CheckMyIP][logo]
+# [![Twitter][twitter-logo]][twitter]  CheckMyIP [![CheckMyIP][logo]][twitter]
 A Telnet and SSH Based Public IP Address Lookup Service
 
 
