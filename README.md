@@ -1,5 +1,5 @@
 # CheckMyIP ![CheckMyIP][logo]
-A Telnet and SSH based IP Lookup Service
+A Telnet and SSH Based Public IP Address Lookup Service
 
 
 -----------------------------------------
@@ -22,9 +22,15 @@ Everybody has used a service like [WhatIsMyIP.com](https://www.whatismyip.com/) 
 
 -----------------------------------------
 ###   HOW TO USE   ###
-Using the public **TelnetMyIP.com** and **SSHMyIP.com** services is pretty easy: simply connect to them with a terminal client. You can use a telnet client with TCP port 23 (`telnet telnetmyip.com`), or a SSH client with TCP port 22 (`ssh telnetmyip.com`). The SSH connection requires no authentication, but your SSH client may require you to enter a username, you can use anything you want as it gets ignored anyways(`ssh -limrootbitch telnetmyip.com`).
+Using the public **TelnetMyIP.com** and **SSHMyIP.com** services is pretty easy: simply connect to them with a terminal client. You can use a telnet client with TCP port 23 (`telnet telnetmyip.com`), or a SSH client with TCP port 22 (`ssh sshmyip.com`). The SSH connection requires no authentication, but your SSH client may require you to enter a username, you can use anything you want as it gets ignored anyways(`ssh -limrootbitch telnetmyip.com`).
 
-To enable the use of this service as a simple API, the response to queries is formatted as a JSON document. See the [Using the API](#using-the-api) section for information on how to leverage the API.
+You can also browse to the HTTP version of the service at [TelnetMyIP.com](http://telnetmyip.com/) which will return a JSON reply with your IP information.
+
+To enable the use of this service as a simple API, the response is formatted as a JSON document. See the [Using the API](#using-the-api) section for information on how to leverage the API.
+
+**Note:** _You can also connect to_ `ipv4.telnetmyip.com` _or_ `ipv6.telnetmyip.com` _if you want to check a specific IP stack._
+
+**Note:** _The DNS records for_ `telnetmyip.com` _and_ `sshmyip.com` _point to the same services._
 
 
 -----------------------------------------
