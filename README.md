@@ -61,14 +61,22 @@ shutdown -r now
 
 Install Dependencies
 ```
+yum install git -y
 yum install gcc -y
 yum install libffi-devel -y
 yum install openssl-devel -y
 pip install python-gssapi
 ```
 
+Clone Repo
+```
+git clone https://github.com/PackeTsar/checkmyip.git
+```
+
 Install Binary
 ```
+cd checkmyip
+
 cp checkmyip.py /bin/checkmyip
 chmod 777 /bin/checkmyip
 
