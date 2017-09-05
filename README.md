@@ -165,7 +165,7 @@ If you would like to help out by contributing code or reporting issues, please d
 
 Visit the GitHub page (https://github.com/packetsar/checkmyip) and either report an issue or fork the project, commit some changes, and submit a pull request.
 
-[twitter-logo]: http://i.imgur.com/wWzX9uB.png
+[twitter-logo]: http://www.packetsar.com/wp-content/uploads/twitter-logo-35.png
 [twitter]: https://twitter.com/TelnetMyIP
 [logo]: http://www.packetsar.com/wp-content/uploads/checkmyip_icon-100.gif
 [whatismyip]: https://www.whatismyip.com/
