@@ -32,8 +32,8 @@ j2send = """{
 "comment": "##     Your IP Address is {{ ip }} ({{ port }})     ##",
 
 
-"family": "{{ family }}", 
-"ip": "{{ ip }}", 
+"family": "{{ family }}",
+"ip": "{{ ip }}",
 "port": "{{ port }}",
 "protocol": "{{ proto }}",
 "version": "%s",
@@ -128,7 +128,7 @@ class ssh_server (paramiko.ServerInterface):
 ##### Method to merge Jinja templates #####
 def j2format(j2tmp, valdict):
 	template = jinja2.Template(j2tmp)
-	return template.render(valdict)
+	return template.render(valdict).replace("\n", "\r\n")
 
 
 ##### Cleans IP addresses coming from socket library #####
