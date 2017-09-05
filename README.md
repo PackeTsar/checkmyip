@@ -1,4 +1,4 @@
-# [![Twitter][twitter-logo]][twitter]  CheckMyIP [![CheckMyIP][logo]][twitter]
+# CheckMyIP (TelnetMyIP  [![Twitter][twitter-logo]][twitter]) [![CheckMyIP][logo]][twitter]
 A Telnet and SSH Based Public IP Address Lookup Service
 
 
@@ -11,8 +11,8 @@ The version of CheckMyIP documented here is: **v1.0.0**
 ###   TABLE OF CONTENTS   ###
 1. [What is CheckMyIP](#what-is-checkmyip)
 2. [How to Use](#how-to-use)
-3. [Install Process](#install-process)
-4. [Using the API](#using-the-api)
+3. [Using the API](#using-the-api)
+4. [Install Process](#install-process)
 5. [Contributing](#contributing)
 
 
@@ -32,6 +32,20 @@ To enable the use of this service as a simple API, the response is formatted as 
 **Note:** _You can also connect to_ `ipv4.telnetmyip.com` _or_ `ipv6.telnetmyip.com` _if you want to check a specific IP stack._
 
 **Note:** _The DNS records for_ `telnetmyip.com` _and_ `sshmyip.com` _point to the same services._
+
+
+-----------------------------------------
+###   USING THE API   ###
+The CheckMyIP code contains the `CheckMyIP_Client` class which is an API client example which can be used to query a CheckMyIP server (like telnetmyip.com). Below is an example of how you can use it.
+
+```
+from checkmyip import CheckMyIP_Client
+
+client = CheckMyIP_Client()
+ipdict = client.get()
+print("\nMy IP is %s\n" % ipdict["ip"])
+print("\nI used port number %s\n" % ipdict["port"])
+```
 
 
 -----------------------------------------
@@ -147,25 +161,12 @@ service checkmyip status
 
 
 -----------------------------------------
-###   USING THE API   ###
-The CheckMyIP code contains the `CheckMyIP_Client` class which is an API client example which can be used to query a CheckMyIP server (like telnetmyip.com). Below is an example of how you can use it.
-
-```
-from checkmyip import CheckMyIP_Client
-
-client = CheckMyIP_Client()
-ipdict = client.get()
-print("\nMy IP is %s\n" % ipdict["ip"])
-print("\nI used port number %s\n" % ipdict["port"])
-```
-
------------------------------------------
 ###   CONTRIBUTING   ###
 If you would like to help out by contributing code or reporting issues, please do!
 
 Visit the GitHub page (https://github.com/packetsar/checkmyip) and either report an issue or fork the project, commit some changes, and submit a pull request.
 
-[twitter-logo]: http://i.imgur.com/wWzX9uB.png
+[twitter-logo]: http://www.packetsar.com/wp-content/uploads/twitter-logo-35.png
 [twitter]: https://twitter.com/TelnetMyIP
 [logo]: http://www.packetsar.com/wp-content/uploads/checkmyip_icon-100.gif
 [whatismyip]: https://www.whatismyip.com/
