@@ -207,8 +207,8 @@ def http_talker(client, valdict, proto="http"):
 		telnet_talker(client, valdict, "http-telnet")  # Hand to telnet_talker
 	else:  # If client is a browser
 		# Proceed with standard HTTP response (with headers)
-		log(j2format(j2log, valdict))
 		valdict.update({"proto": proto})
+		log(j2format(j2log, valdict))
 		response_body_raw = j2format(j2send, valdict)
 		response_headers_raw = """HTTP/1.1 200 OK
 Content-Length: %s
