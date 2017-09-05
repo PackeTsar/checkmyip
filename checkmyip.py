@@ -161,18 +161,18 @@ def listener(port, talker):
 
 
 ##### Telnet responder method. Is run in own thread for each telnet query #####
-def telnet_talker(client, valdict):
-	valdict.update({"proto": "telnet"})  # Add the protocol to the value dict
+def telnet_talker(client, valdict, proto="telnet"):
+	valdict.update({"proto": proto})  # Add the protocol to the value dict
 	log(j2format(j2log, valdict))  # Log the query to the console and logfile
 	client.send(j2format(j2send, valdict))  # Send the query response
 	client.close()  # Close the channel
 
 
 ##### SSH responder method. Gets run in own thread for each SSH query #####
-def ssh_talker(client, valdict):
+def ssh_talker(client, valdict, proto="ssh"):
 	def makefile():  # A hack to make Cisco SSH sessions work properly
 		chan.makefile('rU').readline().strip('\r\n')
-	valdict.update({"proto": "ssh"})
+	valdict.update({"proto": proto})
 	log(j2format(j2log, valdict))
 	t = paramiko.Transport(client, gss_kex=True)
 	t.set_gss_host(socket.getfqdn(""))
@@ -192,27 +192,43 @@ def ssh_talker(client, valdict):
 
 
 ##### HTTP responder method. Gets run in own thread for each HTTP query #####
-def http_talker(client, valdict):
-	valdict.update({"proto": "http"})
-	log(j2format(j2log, valdict))
-	response_body_raw = j2format(j2send, valdict)
-	response_headers_raw = """HTTP/1.1 200 OK
+##### Automatically detects if client is a browser or a telnet client   #####
+def http_talker(client, valdict, proto="http"):
+	time.sleep(.1)  # Sleep to allow the client to send some data
+	client.setblocking(0)  # Set the socket recv as non-blocking
+	browser = False  # Is the client using a browser?
+	try:  # client.recv() will raise an error if the buffer is empty
+		data = client.recv(2048)  # Recieve data from the buffer (if any)
+		print(data)  # Print to stdout
+		browser = True  # Set client browser to True
+	except:  # If buffer was empty, then like a telnet client on TCP80
+		browser = False  # Set client browser to False
+	if not browser:  # If the client is not a browser
+		telnet_talker(client, valdict, "http-telnet")  # Hand to telnet_talker
+	else:  # If client is a browser
+		# Proceed with standard HTTP response (with headers)
+		log(j2format(j2log, valdict))
+		valdict.update({"proto": proto})
+		response_body_raw = j2format(j2send, valdict)
+		response_headers_raw = """HTTP/1.1 200 OK
 Content-Length: %s
 Content-Type: application/json; encoding=utf8
 Connection: close""" % str(len(response_body_raw))  # Response with headers
-	client.send(response_headers_raw + "\n\n" + response_body_raw)
-	client.close()
+		client.send(response_headers_raw + "\n\n" + response_body_raw)
+		client.close()
 
 
 ##### Server startup method. Starts a listener thread for each TCP port #####
 def start():
-	talkers = {22: ssh_talker, 23: telnet_talker, 80: http_talker}
+	talkers = {22: ssh_talker, 23: telnet_talker, 
+	80: http_talker}  # Three listeners on different ports
 	for talker in talkers:
+		# Launch a thread for each listener
 		thread = threading.Thread(target=listener, 
 			args=(talker, talkers[talker]))
 		thread.daemon = True
 		thread.start()
-	while True:
+	while True:  # While loop to allow a CTRL-C interrupt when interactive
 		try:
 			time.sleep(1)
 		except KeyboardInterrupt:
