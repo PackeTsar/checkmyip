@@ -1,6 +1,7 @@
 # CheckMyIP (TelnetMyIP  [![Twitter][twitter-logo]][twitter]) [![CheckMyIP][logo]][twitter]
-A Telnet and SSH Based Public IP Address Lookup Service. Lookup your IP Address from a CLI with `telnet telnetmyip.com` or `ssh sshmyip.com`
+A Telnet and SSH Based Public IP Address Lookup Service
 
+Lookup your IP Address from a CLI with `telnet telnetmyip.com` or `ssh sshmyip.com`
 
 
 -----------------------------------------
