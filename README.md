@@ -11,14 +11,14 @@ The version of CheckMyIP documented here is: **v1.0.0**
 ###   TABLE OF CONTENTS   ###
 1. [What is CheckMyIP](#what-is-checkmyip)
 2. [How to Use](#how-to-use)
-3. [Install Process](#install-process)
-4. [Using the API](#using-the-api)
+3. [Using the API](#using-the-api)
+4. [Install Process](#install-process)
 5. [Contributing](#contributing)
 
 
 -----------------------------------------
 ###   WHAT IS CHECKMYIP   ###
-Everybody has used a service like [WhatIsMyIP.com](https://www.whatismyip.com/) before. If you are an IT engineer or even an amateur technology enthusiast, then you have probably had a reason to check to see your public IP address. This service works great when a browser is available, but at times it is not. We often find ourselves logged into a remote Linux machine or a network switch/router which has a command line and terminal clients (Telnet and SSH), but no browser. The CheckMyIP app and the [TelnetMyIP.com](telnet://telnetmyip.com/) and **SSHMyIP.com** public services were created with this in mind.
+Everybody has used a service like [WhatIsMyIP.com](https://www.whatismyip.com/) before. If you are an IT engineer or even an amateur technology enthusiast, then you have probably had a reason to check to see your public IP address. This service works great when a browser is available, but at times it is not. We often find ourselves logged into a remote Linux machine or a network switch/router which has a command line and terminal clients (Telnet and SSH), but no browser. The CheckMyIP app and the **TelnetMyIP.com** and **SSHMyIP.com** public services were created with this in mind.
 
 
 -----------------------------------------
@@ -32,6 +32,20 @@ To enable the use of this service as a simple API, the response is formatted as 
 **Note:** _You can also connect to_ `ipv4.telnetmyip.com` _or_ `ipv6.telnetmyip.com` _if you want to check a specific IP stack._
 
 **Note:** _The DNS records for_ `telnetmyip.com` _and_ `sshmyip.com` _point to the same services._
+
+
+-----------------------------------------
+###   USING THE API   ###
+The CheckMyIP code contains the `CheckMyIP_Client` class which is an API client example which can be used to query a CheckMyIP server (like telnetmyip.com). Below is an example of how you can use it.
+
+```
+from checkmyip import CheckMyIP_Client
+
+client = CheckMyIP_Client()
+ipdict = client.get()
+print("\nMy IP is %s\n" % ipdict["ip"])
+print("\nI used port number %s\n" % ipdict["port"])
+```
 
 
 -----------------------------------------
@@ -145,19 +159,6 @@ service checkmyip start
 service checkmyip status
 ```
 
-
------------------------------------------
-###   USING THE API   ###
-The CheckMyIP code contains the `CheckMyIP_Client` class which is an API client example which can be used to query a CheckMyIP server (like telnetmyip.com). Below is an example of how you can use it.
-
-```
-from checkmyip import CheckMyIP_Client
-
-client = CheckMyIP_Client()
-ipdict = client.get()
-print("\nMy IP is %s\n" % ipdict["ip"])
-print("\nI used port number %s\n" % ipdict["port"])
-```
 
 -----------------------------------------
 ###   CONTRIBUTING   ###
