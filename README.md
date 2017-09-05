@@ -72,7 +72,8 @@ Create Service (`vi /etc/init.d/checkmyip`)
 DAEMON_PATH="/bin/"
 
 DAEMON=checkmyip
-#DAEMONOPTS="run"
+STDOUTFILE=/etc/checkmyip/stdout.log
+STDERR=/etc/checkmyip/stderr.log
 
 NAME=CheckMyIP
 DESC="CheckMyIP Daemon"
@@ -83,7 +84,7 @@ case "$1" in
 start)
 				printf "%-50s" "Starting $NAME..."
 				cd $DAEMON_PATH
-				PID=`$DAEMON $DAEMONOPTS > /dev/null 2>&1 & echo $!`
+				PID=`stdbuf -o0 $DAEMON >> $STDOUTFILE 2>>$STDERR & echo $!`
 				#echo "Saving PID" $PID " to " $PIDFILE
 				if [ -z $PID ]; then
 						printf "%s
