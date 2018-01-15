@@ -273,6 +273,10 @@ class CheckMyIP_Client:
 		else:
 			raise Exception("Allowed families are 'auto', 'ipv4', 'ipv6'")
 
+### CheckMyIP_Client Example Usage ###
+#client = CheckMyIP_Client()
+#client.get()
+
 
 if __name__ == "__main__":
 	logging = log_management()  # Instantiate log class
