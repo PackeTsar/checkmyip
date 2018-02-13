@@ -8,7 +8,7 @@
 
 
 ##### Inform version here #####
-version = "v1.0.0"
+version = "v1.1.0"
 
 
 ##### Import python2 native modules #####
@@ -45,11 +45,17 @@ j2send = """{
 class log_management:
 	def __init__(self):
 		self.logpath = "/etc/checkmyip/"  # Log file directory path
-		self.logfile = "/etc/checkmyip/checkmyip.log"  # Log file full path
+		self.logfile = "/etc/checkmyip/%scheckmyip.log" % \
+			time.strftime("%Y-%m-%d_")  # Log file full path
+		self.paramikolog = "/etc/checkmyip/%sssh.log" % \
+			time.strftime("%Y-%m-%d_")  # SSH log file path
+		self.thread = threading.Thread(target=self._change_logfiles)
+		self.thread.daemon = True
+		self.thread.start()  # Start talker thread to listen to port
 		self._publish_methods()  # Publish the console and log methods to glob
 		self.can_log = True  # Variable used to check if we can log
 		try:  # Try to configure the SSH log file, create dir if fail
-			paramiko.util.log_to_file('/etc/checkmyip/ssh.log')
+			paramiko.util.log_to_file(self.paramikolog)
 		except IOError:
 			self._create_log_dir()
 	def _logger(self, data):  # Logging method published to global as 'log'
@@ -79,6 +85,14 @@ class log_management:
 		os.system('mkdir -p ' + self.logpath)
 		self._console("Logpath (%s) created" % self.logpath)
 		self.can_log = True
+	def _change_logfiles(self, thread=True):
+		while True:
+			time.sleep(10)
+			self.logfile = "/etc/checkmyip/%scheckmyip.log" % \
+				time.strftime("%Y-%m-%d_")  # Log file full path
+			self.paramikolog = "/etc/checkmyip/%sssh.log" % \
+				time.strftime("%Y-%m-%d_")  # SSH log file path
+			paramiko.util.log_to_file(self.paramikolog)
 
 
 ##### Creates a RSA key for use by paramiko #####
