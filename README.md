@@ -6,7 +6,7 @@ Lookup your IP Address from a CLI with `telnet telnetmyip.com` or `ssh sshmyip.c
 
 -----------------------------------------
 ###   VERSION   ###
-The version of CheckMyIP documented here is: **v1.0.0**
+The version of CheckMyIP documented here is: **v1.1.0**
 
 -----------------------------------------
 ###   TABLE OF CONTENTS   ###
@@ -14,7 +14,8 @@ The version of CheckMyIP documented here is: **v1.0.0**
 2. [How to Use](#how-to-use)
 3. [Using the API](#using-the-api)
 4. [Install Process](#install-process)
-5. [Contributing](#contributing)
+5. [1.0.0 TO 1.1.0 Updates](#updates-in-v100----v110)
+6. [Contributing](#contributing)
 
 
 -----------------------------------------
@@ -167,6 +168,14 @@ chkconfig checkmyip on
 service checkmyip start
 service checkmyip status
 ```
+
+
+-----------------------------------------
+###   UPDATES IN V1.0.0 --> V1.1.0   ###
+
+**NEW FEATURES:**
+- Was seeing issues where SSH would be very slow to exchange. Likely related to log file sizes, so I change the logging function to turnover to new logging files every day.
+
 
 
 -----------------------------------------
