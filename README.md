@@ -3,7 +3,7 @@ A Telnet, SSH and Simple HTTP Based Public IP Address Lookup Service
 
 
 -----------------------------------------
-### Usage
+### USAGE
 - TELNET: `telnet telnetmyip.com`
 - SSH: `ssh sshmyip.com`
 	- Your SSH client may require you to enter a username. You can use anything you want (`ssh -limrootbitch telnetmyip.com`)
