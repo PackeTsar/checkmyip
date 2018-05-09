@@ -1,8 +1,14 @@
-# CheckMyIP (TelnetMyIP  [![Twitter][twitter-logo]][twitter]) [![CheckMyIP][logo]][twitter]
-A Telnet and SSH Based Public IP Address Lookup Service
+# CheckMyIP (TelnetMyIP.com) ![CheckMyIP][logo]
+A Telnet, SSH and Simple HTTP Based Public IP Address Lookup Service
 
-Lookup your IP Address from a CLI with `telnet telnetmyip.com` or `ssh sshmyip.com`
 
+-----------------------------------------
+### Try Me!
+- TELNET: `telnet telnetmyip.com`
+- SSH: `ssh sshmyip.com`
+	- Your SSH client may require you to enter a username. You can use anything you want (`ssh -limrootbitch telnetmyip.com`)
+- CURL: `curl telnetmyip.com`
+- WGET: `wget -qO- telnetmyip.com`
 
 -----------------------------------------
 ###   VERSION   ###
@@ -25,7 +31,7 @@ Everybody has used a service like [WhatIsMyIP.com](https://www.whatismyip.com/) 
 
 -----------------------------------------
 ###   HOW TO USE   ###
-Using the public **TelnetMyIP.com** and **SSHMyIP.com** services is pretty easy: simply connect to them with a terminal client. You can use a telnet client with TCP port 23 (`telnet telnetmyip.com`), or a SSH client with TCP port 22 (`ssh sshmyip.com`). The SSH connection requires no authentication, but your SSH client may require you to enter a username, you can use anything you want as it gets ignored anyways(`ssh -limrootbitch telnetmyip.com`).
+Using the public **TelnetMyIP.com** and **SSHMyIP.com** services is pretty easy: simply connect to them with a terminal client. You can use a telnet client with TCP port 23 (`telnet telnetmyip.com`), a SSH client with TCP port 22 (`ssh sshmyip.com`), or CURL (`curl telnetmyip.com`). The SSH connection requires no authentication, but your SSH client may require you to enter a username, you can use anything you want as it gets ignored anyways(`ssh -limrootbitch telnetmyip.com`).
 
 You can also browse to the HTTP version of the service at [TelnetMyIP.com](http://telnetmyip.com/) which will return a JSON reply with your IP information.
 
