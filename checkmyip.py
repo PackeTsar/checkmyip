@@ -8,7 +8,7 @@
 
 
 ##### Inform version here #####
-version = "v1.1.0"
+version = "v1.2.0"
 
 
 ##### Import python2 native modules #####
@@ -38,7 +38,7 @@ j2send = """{
 "protocol": "{{ proto }}",
 "version": "%s",
 "website": "https://github.com/packetsar/checkmyip"
-}\r\n""" % version
+}""" % version
 
 
 ##### Handles all prnting to console and logging to the logfile #####
@@ -178,7 +178,7 @@ def listener(port, talker):
 def telnet_talker(client, valdict, proto="telnet"):
 	valdict.update({"proto": proto})  # Add the protocol to the value dict
 	log(j2format(j2log, valdict))  # Log the query to the console and logfile
-	client.send(j2format(j2send, valdict))  # Send the query response
+	client.send(j2format(j2send, valdict)+"\n")  # Send the query response
 	client.close()  # Close the channel
 
 
@@ -197,7 +197,7 @@ def ssh_talker(client, valdict, proto="ssh"):
 	chan = t.accept(20)
 	if chan:
 		server.event.wait(10)
-		chan.send('%s' % j2format(j2send, valdict))  # Send the response
+		chan.send('%s\n' % j2format(j2send, valdict))  # Send the response
 		thread = threading.Thread(target=makefile)
 		thread.start()  # Start hack in thread since it hangs indefinately
 		time.sleep(1)  # Wait a second
@@ -223,7 +223,7 @@ def http_talker(client, valdict, proto="http"):
 		# Proceed with standard HTTP response (with headers)
 		valdict.update({"proto": proto})
 		log(j2format(j2log, valdict))
-		response_body_raw = j2format(j2send, valdict)
+		response_body_raw = j2format(j2send, valdict)+"\n"
 		response_headers_raw = """HTTP/1.1 200 OK
 Content-Length: %s
 Content-Type: application/json; encoding=utf8
