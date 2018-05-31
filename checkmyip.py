@@ -38,7 +38,8 @@ j2send = """{
 "protocol": "{{ proto }}",
 "version": "%s",
 "website": "https://github.com/packetsar/checkmyip"
-}""" % version
+}
+""" % version
 
 
 ##### Handles all prnting to console and logging to the logfile #####
