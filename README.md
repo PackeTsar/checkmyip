@@ -12,7 +12,7 @@ A Telnet, SSH and Simple HTTP Based Public IP Address Lookup Service
 
 -----------------------------------------
 ###   VERSION   ###
-The version of CheckMyIP documented here is: **v1.1.0**
+The version of CheckMyIP documented here is: **v1.3.0**
 
 -----------------------------------------
 ###   TABLE OF CONTENTS   ###
@@ -69,11 +69,9 @@ shutdown -r now
 
 Install Dependencies
 ```
-yum install git -y
-yum install gcc -y
-yum install libffi-devel -y
-yum install openssl-devel -y
-pip install python-gssapi
+sudo apt install python3-pip
+sudo -H pip3 install paramiko
+sudo apt install python3-gssapi
 ```
 
 Clone Repo
@@ -81,98 +79,35 @@ Clone Repo
 git clone https://github.com/PackeTsar/checkmyip.git
 ```
 
-Install Binary
+Create Service (`sudo nano /etc/systemd/system/checkmyip.service`)
 ```
-cd checkmyip
+[Unit]
+Description=CheckMyIP Service
+After=network-online.target
+Wants=network-online.target
 
-cp checkmyip.py /bin/checkmyip
-chmod 777 /bin/checkmyip
+[Service]
+Type=simple
 
-mkdir -p /etc/checkmyip/
+PIDFile=/var/tmp/checkmyip.pid
+WorkingDirectory=/home/ubuntu/checkmyip
+
+ExecStart=/usr/bin/python3 checkmyip.py
+
+Restart=on-failure
+RestartSec=30
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
 ```
-
-Create Service (`vi /etc/init.d/checkmyip`)
-```
-#!/bin/bash
-# checkmyip daemon
-# chkconfig: 345 20 80
-# description: CheckMyIP Daemon
-# processname: checkmyip
-
-DAEMON_PATH="/bin/"
-
-DAEMON=checkmyip
-STDOUTFILE=/etc/checkmyip/stdout.log
-STDERR=/etc/checkmyip/stderr.log
-
-NAME=CheckMyIP
-DESC="CheckMyIP Daemon"
-PIDFILE=/var/run/$NAME.pid
-SCRIPTNAME=/etc/init.d/$NAME
-
-case "$1" in
-start)
-				printf "%-50s" "Starting $NAME..."
-				cd $DAEMON_PATH
-				PID=`stdbuf -o0 $DAEMON >> $STDOUTFILE 2>>$STDERR & echo $!`
-				#echo "Saving PID" $PID " to " $PIDFILE
-				if [ -z $PID ]; then
-						printf "%s
-" "Fail"
-				else
-						echo $PID > $PIDFILE
-						printf "%s
-" "Ok"
-				fi
-;;
-status)
-				if [ -f $PIDFILE ]; then
-						PID=`cat $PIDFILE`
-						if [ -z "`ps axf | grep ${PID} | grep -v grep`" ]; then
-								printf "%s
-" "Process dead but pidfile exists"
-						else
-								echo "$DAEMON (pid $PID) is running..."
-						fi
-				else
-						printf "%s
-" "$DAEMON is stopped"
-				fi
-;;
-stop)
-				printf "%-50s" "Stopping $NAME"
-						PID=`cat $PIDFILE`
-						cd $DAEMON_PATH
-				if [ -f $PIDFILE ]; then
-						kill -HUP $PID
-						printf "%s
-" "Ok"
-						rm -f $PIDFILE
-				else
-						printf "%s
-" "pidfile not found"
-				fi
-;;
-
-restart)
-				$0 stop
-				$0 start
-;;
-
-*)
-				echo "Usage: $0 {status|start|stop|restart}"
-				exit 1
-esac
-```
-
-
 
 Finish and Start Up Service
 ```
-chmod 777 /etc/init.d/checkmyip
-chkconfig checkmyip on
-service checkmyip start
-service checkmyip status
+sudo systemctl daemon-reload
+sudo systemctl enable checkmyip
+sudo systemctl start checkmyip
+sudo systemctl status checkmyip
 ```
 
 
@@ -181,6 +116,13 @@ service checkmyip status
 
 **NEW FEATURES:**
 - Was seeing issues where SSH would be very slow to exchange. Likely related to log file sizes, so I change the logging function to turnover to new logging files every day.
+
+
+-----------------------------------------
+###   UPDATES IN V1.1.0 --> V1.3.0   ###
+
+- README updated for install on Ubuntu instead of CentOS
+- Small tweaks to support Python3
 
 
 

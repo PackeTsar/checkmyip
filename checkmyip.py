@@ -8,7 +8,7 @@
 
 
 ##### Inform version here #####
-version = "v1.2.0"
+version = "v1.3.0"
 
 
 ##### Import python2 native modules #####
@@ -37,7 +37,8 @@ j2send = """{
 "port": "{{ port }}",
 "protocol": "{{ proto }}",
 "version": "%s",
-"website": "https://github.com/packetsar/checkmyip"
+"website": "https://github.com/packetsar/checkmyip",
+"sponsor": "Sponsored by ConvergeOne, https://www.convergeone.com/"
 }""" % version
 
 
@@ -178,7 +179,8 @@ def listener(port, talker):
 def telnet_talker(client, valdict, proto="telnet"):
 	valdict.update({"proto": proto})  # Add the protocol to the value dict
 	log(j2format(j2log, valdict))  # Log the query to the console and logfile
-	client.send(j2format(j2send, valdict)+"\n")  # Send the query response
+	# Send the query response
+	client.send(f'{j2format(j2send, valdict)}\n'.encode())
 	client.close()  # Close the channel
 
 
@@ -228,17 +230,17 @@ def http_talker(client, valdict, proto="http"):
 Content-Length: %s
 Content-Type: application/json; encoding=utf8
 Connection: close""" % str(len(response_body_raw))  # Response with headers
-		client.send(response_headers_raw + "\n\n" + response_body_raw)
+		client.send(f'{response_headers_raw}\n\n{response_body_raw}'.encode())
 		client.close()
 
 
 ##### Server startup method. Starts a listener thread for each TCP port #####
 def start():
-	talkers = {22: ssh_talker, 23: telnet_talker, 
+	talkers = {22: ssh_talker, 23: telnet_talker,
 	80: http_talker}  # Three listeners on different ports
 	for talker in talkers:
 		# Launch a thread for each listener
-		thread = threading.Thread(target=listener, 
+		thread = threading.Thread(target=listener,
 			args=(talker, talkers[talker]))
 		thread.daemon = True
 		thread.start()
@@ -261,19 +263,19 @@ class CheckMyIP_Client:
 	def get(self):  # Primary method to run IP check
 		if self._af == "auto":  # If we are using an auto address family
 			try:  # Try using IPv6
-				sock = self._socket.socket(self._socket.AF_INET6, 
+				sock = self._socket.socket(self._socket.AF_INET6,
 				self._socket.SOCK_STREAM)
 				sock.connect((self.server, 23))
 			except:  # Fall back to IPv4 if IPv6 fails
-				sock = self._socket.socket(self._socket.AF_INET, 
+				sock = self._socket.socket(self._socket.AF_INET,
 				self._socket.SOCK_STREAM)
 				sock.connect((self.server, 23))
 		elif self._af == "ipv6":  # If we are using the IPv6 address family
-			sock = self._socket.socket(self._socket.AF_INET6, 
+			sock = self._socket.socket(self._socket.AF_INET6,
 			self._socket.SOCK_STREAM)
 			sock.connect((self.server, 23))
 		elif self._af == "ipv4":  # If we are using the IPv4 address family
-			sock = self._socket.socket(self._socket.AF_INET, 
+			sock = self._socket.socket(self._socket.AF_INET,
 			self._socket.SOCK_STREAM)
 			sock.connect((self.server, 23))
 		self._raw_data = sock.recv(1024).decode()
