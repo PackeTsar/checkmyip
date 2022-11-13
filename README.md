@@ -134,5 +134,5 @@ Visit the GitHub page (https://github.com/packetsar/checkmyip) and either report
 
 [twitter-logo]: http://www.packetsar.com/wp-content/uploads/twitter-logo-35.png
 [twitter]: https://twitter.com/TelnetMyIP
-[logo]: http://www.packetsar.com/wp-content/uploads/checkmyip_icon-100.gif
+[logo]: /checkmyip_icon-100.gif
 [whatismyip]: https://www.whatismyip.com/
