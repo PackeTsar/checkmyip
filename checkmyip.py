@@ -181,6 +181,7 @@ def telnet_talker(client, valdict, proto="telnet"):
 	log(j2format(j2log, valdict))  # Log the query to the console and logfile
 	# Send the query response
 	client.send(f'{j2format(j2send, valdict)}\n'.encode())
+	time.sleep(1)  # Wait a second
 	client.close()  # Close the channel
 
 
